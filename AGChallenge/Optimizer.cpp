@@ -28,8 +28,9 @@ void COptimizer::vRunIteration()
 
 	vector<int> v_candidate;
 	//v_fill_randomly(v_candidate);
-	CIndividual getCIndividual = c_genetic_algorithm.runOneIteration();
-	v_candidate = getCIndividual.getGenotyp();
+	CIndividual getBestCIndividual = c_genetic_algorithm.runOneIteration();
+	v_candidate = getBestCIndividual.getGenotyp();
+	cout << "v_candidate.size(): " << v_candidate.size() << endl;
 	double d_candidate_fitness = c_evaluator.dEvaluate(&v_candidate);
 
 	if (d_candidate_fitness > d_current_best_fitness)

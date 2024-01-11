@@ -37,12 +37,17 @@ using namespace std;
 
 		for (int i = 0; i < popSize; i++)
 		{
-			vector<int> genotype;	// First population is random
-			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
+			vector<int> genotyp;	// First population is random
+			cout << "Create genotype..." << endl;
+			//for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
+			for (int j = 0; j < 4; j++)
 			{
-				genotype.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
+				//genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
+				genotyp.push_back(CIndividual::randRange(0, 3));
+				//cout << "evaluatorPointer->iGetNumberOfValues(j): " << evaluatorPointer->iGetNumberOfValues(j) << " ----//---- ";
+				cout << "genotype[" << j << "]: " << genotyp.at(j) << endl;
 			}
-			vectorPopulation.push_back(CIndividual(genotype, evaluatorPointer));
+			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
 	}
 
@@ -96,11 +101,11 @@ using namespace std;
 			for (int i = 0; i <= 1; i++) // exectue twice, choose two parents
 			{
 				CIndividual candidate1 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));
-				cout << "candidate1: " << candidate1.toString() << endl;
+				//cout << "candidate1: " << candidate1.toString() << endl;
 				CIndividual candidate2 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));
-				cout << "candidate2: " << candidate2.toString() << endl;
+				//cout << "candidate2: " << candidate2.toString() << endl;
 				CIndividual parent1 = candidate1.getFitness() > candidate2.getFitness() ? candidate1 : candidate2; // if candidate1 is better than candidate2, parent1 = candidate1, else parent1 = candidate2
-				cout << "parent: " << parent1.toString() << endl;
+				//cout << "parent: " << parent1.toString() << endl;
 				parents.push_back(parent1);
 			}
 
@@ -123,7 +128,8 @@ using namespace std;
 		{
 			newPopulation.at(i).mutate(mutProb); // mutation probability is checked for each gene inside the mutate function
 		}
-		printPopulation();
+		//cout << vectorPopulation.at(0).toString() << endl;
+		//printPopulation();
 		vectorPopulation = newPopulation; // replace old population with the new one
 
 		// Find the best individual to return:
