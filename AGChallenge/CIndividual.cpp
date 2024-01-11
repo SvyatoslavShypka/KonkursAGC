@@ -57,11 +57,11 @@ void CIndividual::printGenotyp() {
 }
 
 string CIndividual::toString() const {
-	string result = "";
+	string result = "*";
 		for (int i : genotyp) {
 			result += to_string(i);
 	}
-	return result; }
+	return result + "*"; }
 
 //pair<CIndividual, CIndividual> CIndividual::crossover(const CIndividual& parent1, const CIndividual& parent2) {
 //	// Punkt krzyżowania

@@ -59,12 +59,12 @@ using namespace std;
 		//}
 	}
 
-	void CGeneticAlgorithm::printPopulation() {
-		//for (CIndividual* const& individual : *vectorPopulation) {
-		//	cout << individual->toString() << ' ';
-		//}
-			
-	}
+	//void CGeneticAlgorithm::printPopulation() {
+	//	//for (CIndividual* const& individual : *vectorPopulation) {
+	//	//	cout << individual->toString() << ' ';
+	//	//}
+	//		
+	//}
 
 	void runGeneticAlgorithm(int max_iterations) {
 		int iterator = 0;
@@ -96,8 +96,11 @@ using namespace std;
 			for (int i = 0; i <= 1; i++) // exectue twice, choose two parents
 			{
 				CIndividual candidate1 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));
+				cout << "candidate1: " << candidate1.toString() << endl;
 				CIndividual candidate2 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));
+				cout << "candidate2: " << candidate2.toString() << endl;
 				CIndividual parent1 = candidate1.getFitness() > candidate2.getFitness() ? candidate1 : candidate2; // if candidate1 is better than candidate2, parent1 = candidate1, else parent1 = candidate2
+				cout << "parent: " << parent1.toString() << endl;
 				parents.push_back(parent1);
 			}
 
@@ -120,7 +123,7 @@ using namespace std;
 		{
 			newPopulation.at(i).mutate(mutProb); // mutation probability is checked for each gene inside the mutate function
 		}
-
+		printPopulation();
 		vectorPopulation = newPopulation; // replace old population with the new one
 
 		// Find the best individual to return:
@@ -130,6 +133,15 @@ using namespace std;
 			if (vectorPopulation.at(i).getFitness() > bestIndividual.getFitness()) { bestIndividual = vectorPopulation.at(i); }
 		}
 		return bestIndividual;
+	}
+
+	void CGeneticAlgorithm::printPopulation() {
+		cout << "Vector population: " << vectorPopulation.size() << ": ";
+
+		for (CIndividual ind : vectorPopulation) {
+			cout << ind.toString();
+		}
+		cout << endl;
 	}
 
 

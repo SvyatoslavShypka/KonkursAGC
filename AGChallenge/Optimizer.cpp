@@ -26,28 +26,15 @@ void COptimizer::vRunIteration()
 
 {
 
-	/*while ¬stopCondition do
-	 newP op empty;
-	while size(newP op) < size(population) do
-	par1 ← selectIndividual(population);
-	par2 ← selectIndividual(population);
-	7: of f spr1, of f spr2 ← crossover(par1, par2);
-	8: Mutate(of f spr1);
-	9: Mutate(of f spr2);
-	10: InsertToPopulation(newP op, of f spr1);
-	11: InsertToPopulation(newP op, of f spr2);
-	12: end while
-		13 : population ← newP op;
-	14: end while*/
-
 	vector<int> v_candidate;
-	v_fill_randomly(v_candidate);
-	//v_candidate = c_genetic_algorithm.runOneIteration().getGenotyp();
-
+	//v_fill_randomly(v_candidate);
+	CIndividual getCIndividual = c_genetic_algorithm.runOneIteration();
+	v_candidate = getCIndividual.getGenotyp();
 	double d_candidate_fitness = c_evaluator.dEvaluate(&v_candidate);
 
 	if (d_candidate_fitness > d_current_best_fitness)
 	{
+		//cout << "getCIndividual: " << getCIndividual.toString() << endl;
 		v_current_best = v_candidate;
 		d_current_best_fitness = d_candidate_fitness;
 
