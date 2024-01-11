@@ -39,7 +39,7 @@ void COptimizer::vRunIteration()
 		v_current_best = v_candidate;
 		d_current_best_fitness = d_candidate_fitness;
 
-		cout << d_current_best_fitness << endl;
+		cout << "---------------------------------------result----------------" << d_current_best_fitness << endl;
 	}//if (d_candidate_fitness > d_current_best_fitness)
 }//void COptimizer::vRunIteration()
 

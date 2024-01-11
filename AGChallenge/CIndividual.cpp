@@ -118,14 +118,15 @@ void CIndividual::mutate(double mutProb)
 vector<CIndividual> CIndividual::cross(CIndividual& other)
 {
 	// randomize crossover point:
-	int crossIndex = randRange(1, genotyp.size() - 1);
+	int crossPunkt = randRange(1, genotyp.size() - 1);
+	cout << "crossPunkt: " << crossPunkt << endl;
 	cout << "paren1: " << this->toString() << endl;
 	cout << "paren2: " << other.toString() << endl;
 
 	vector<int> genotype1, genotype2;
 	for (int i = 0; i < genotyp.size(); i++)
 	{
-		if (i < crossIndex)
+		if (i < crossPunkt)
 		{
 			genotype1.push_back(genotyp.at(i));
 			genotype2.push_back(other.genotyp.at(i));
@@ -136,8 +137,10 @@ vector<CIndividual> CIndividual::cross(CIndividual& other)
 			genotype2.push_back(genotyp.at(i));
 		}
 	}
-
-	return vector<CIndividual> {CIndividual(genotype1, evaluatorPointer), CIndividual(genotype2, evaluatorPointer)};
+	vector<CIndividual> children = vector<CIndividual>{ CIndividual(genotype1, evaluatorPointer), CIndividual(genotype2, evaluatorPointer) };
+	cout << "child1: " << children.at(0).toString() << endl;
+	cout << "child2: " << children.at(1).toString() << endl;
+	return children;
 }
 
 int CIndividual::randRange(int from, int to)
