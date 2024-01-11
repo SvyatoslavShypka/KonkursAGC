@@ -74,18 +74,74 @@ pair<CIndividual, CIndividual> CIndividual::crossover(const CIndividual& parent1
 	return make_pair(child1, child2);
 }
 
-void CIndividual::mutate(double mutProb) {
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<> dis(0, 1);
+//void CIndividual::mutate(double mutProb) {
+//	random_device rd;
+//	mt19937 gen(rd());
+//	uniform_real_distribution<> dis(0, 1);
+//
+//	for (int i = 0; i < genotyp.size(); i++) {
+//		if (dis(gen) < mutProb) {
+//			// Mutacja genotypu
+//			int new_value = rand() % genotyp.size();
+//			genotyp[i] = new_value;
+//		}
+//	}
+//}
 
-	for (int i = 0; i < genotyp.size(); i++) {
-		if (dis(gen) < mutProb) {
-			// Mutacja genotypu
-			int new_value = rand() % genotyp.size();
-			genotyp[i] = new_value;
+
+CIndividual::CIndividual(vector<int> genotyp, CLFLnetEvaluator* evaluatorPointer)
+{
+	this->genotyp = genotyp;
+	this->evaluatorPointer = evaluatorPointer;
+	//fitness = NULL;
+	fitness = evaluatorPointer->dEvaluate(&genotyp);
+}
+
+double CIndividual::getFitness()
+{
+	if (fitness == NULL) { fitness = evaluatorPointer->dEvaluate(&genotyp); }
+	return fitness;
+}
+
+void CIndividual::mutate(double mutProb)
+{
+	for (int i = 0; i < genotyp.size(); i++) // For each gene roll if mutation should happen or not
+	{
+		if (dRand() < mutProb)
+		{
+			genotyp.at(i) = lRand(evaluatorPointer->iGetNumberOfValues(i));
+			if (fitness != NULL) { fitness = NULL; } // If mutation happens, fitness needs to be recalculated
 		}
 	}
+}
+
+vector<CIndividual> CIndividual::cross(CIndividual& other)
+{
+	// randomize crossover point:
+	int crossIndex = randRange(1, genotyp.size() - 1);
+	vector<int> genotype1, genotype2;
+	for (int i = 0; i < genotyp.size(); i++)
+	{
+		if (i < crossIndex)
+		{
+			genotype1.push_back(genotyp.at(i));
+			genotype2.push_back(other.genotyp.at(i));
+		}
+		else
+		{
+			genotype1.push_back(other.genotyp.at(i));
+			genotype2.push_back(genotyp.at(i));
+		}
+	}
+	return vector<CIndividual> {CIndividual(genotype1, evaluatorPointer), CIndividual(genotype2, evaluatorPointer)};
+}
+
+int CIndividual::randRange(int from, int to)
+{
+	random_device					rand_dev;
+	mt19937						generator(rand_dev());
+	uniform_int_distribution<int>  distr(from, to);
+	return distr(generator);
 }
 
 

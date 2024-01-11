@@ -11,8 +11,17 @@ using namespace std;
 		this->requestQuantity = REQUEST_QUANTITY;
 		this->pathsQuantity = PATHS_QUANTITY;
 		this->stopCriterion = STOP_CRITERION;
-		this->vectorPopulation = new vector<CIndividual>;
 		this->evaluatorPointer = evaluatorPointer;
+
+		for (int i = 0; i < popSize; i++)
+		{
+			vector<int> genotype;	// First population is random
+			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
+			{
+				genotype.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
+			}
+			vectorPopulation.push_back(CIndividual(genotype, evaluatorPointer));
+		}
 	};
 
 	CGeneticAlgorithm::CGeneticAlgorithm(int popSize, double crossProb, double mutProb, int requestQuantity, int pathsQuantity, int stopCriterion, CLFLnetEvaluator* evaluatorPointer) {
@@ -23,9 +32,17 @@ using namespace std;
 		this->requestQuantity = requestQuantity;
 		this->pathsQuantity = pathsQuantity;
 		this->stopCriterion = stopCriterion;
-		this->vectorPopulation = new vector<CIndividual*>;
 		this->evaluatorPointer = evaluatorPointer;
 
+		for (int i = 0; i < popSize; i++)
+		{
+			vector<int> genotype;	// First population is random
+			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
+			{
+				genotype.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
+			}
+			vectorPopulation.push_back(CIndividual(genotype, evaluatorPointer));
+		}
 	}
 
 
@@ -34,17 +51,17 @@ using namespace std;
 
 	void CGeneticAlgorithm::vInitialize() {
 
-		for (int i = 0; i < popSize; i++) {
-			CIndividual* obj1 = new CIndividual();
-			obj1->genotypeGenerator(pathsQuantity);
-			vectorPopulation->push_back(obj1);
-		}
+		//for (int i = 0; i < popSize; i++) {
+		//	CIndividual* obj1 = new CIndividual();
+		//	obj1->genotypeGenerator(pathsQuantity);
+		//	vectorPopulation->push_back(obj1);
+		//}
 	}
 
 	void CGeneticAlgorithm::printPopulation() {
-		for (CIndividual* const& individual : *vectorPopulation) {
-			cout << individual->toString() << ' ';
-		}
+		//for (CIndividual* const& individual : *vectorPopulation) {
+		//	cout << individual->toString() << ' ';
+		//}
 			
 	}
 
@@ -64,9 +81,9 @@ using namespace std;
 		}
 	}
 	//TODO how to check and return bestResult
-	CIndividual* CGeneticAlgorithm::bestResult() const {
-		return bestRes;
-	}
+	//CIndividual* CGeneticAlgorithm::bestResult() const {
+	//	return bestRes;
+	//}
 
 	
 
