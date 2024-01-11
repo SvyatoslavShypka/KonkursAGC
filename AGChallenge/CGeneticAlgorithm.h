@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <vector>
 #include "CIndividual.h"
-#include "Optimizer.h"
+//#include "Optimizer.h"
 
 class CGeneticAlgorithm {
 

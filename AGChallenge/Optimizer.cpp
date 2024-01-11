@@ -1,5 +1,5 @@
 ﻿#include "Optimizer.h"
-#include "CGeneticAlgorithm.h"
+//#include "CGeneticAlgorithm.h"
 
 #include <cfloat>
 #include <iostream>
@@ -9,20 +9,12 @@ using namespace std;
 
 COptimizer::COptimizer(CLFLnetEvaluator &cEvaluator)
 	: c_evaluator(cEvaluator), c_genetic_algorithm(POPULATION_SIZE, CROSS_PROBABILITY, MUTATION_PROBABILITY, REQUEST_QUANTITY, PATHS_QUANTITY, STOP_CRITERION, &c_evaluator)
-
-	
 {
 	random_device c_seed_generator;
 	c_rand_engine.seed(c_seed_generator());
 
 	d_current_best_fitness = 0;
-}
-
-
-
-
-
-//COptimizer::COptimizer(CEvaluator &cEvaluator)
+}//COptimizer::COptimizer(CEvaluator &cEvaluator)
 
 void COptimizer::vInitialize()
 {
