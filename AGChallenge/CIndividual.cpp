@@ -119,8 +119,8 @@ vector<CIndividual> CIndividual::cross(CIndividual& other)
 {
 	// randomize crossover point:
 	int crossIndex = randRange(1, genotyp.size() - 1);
-	cout << "paren1";
-	cout << "paren1";
+	cout << "paren1: " << this->toString() << endl;
+	cout << "paren2: " << other.toString() << endl;
 
 	vector<int> genotype1, genotype2;
 	for (int i = 0; i < genotyp.size(); i++)

@@ -95,6 +95,7 @@ using namespace std;
 	CIndividual CGeneticAlgorithm::runOneIteration()
 	{
 		vector<CIndividual> parents, newPopulation;
+		printPopulation();
 		while (newPopulation.size() < vectorPopulation.size()) // while new population is not full, keep adding individuals
 		{
 			// Selection of Individuals to cross:
@@ -110,7 +111,9 @@ using namespace std;
 			}
 
 			// Crossing:
-			if (dRand() < crossProb) // if crossover happens
+			double randCross = dRand();
+			cout << "randCross: " << randCross << endl;
+			if (randCross < crossProb) // if crossover happens
 			{
 				vector<CIndividual> children = parents.at(0).cross(parents.at(1)); // cross parents and add children to the new population
 				newPopulation.push_back(children.at(0));
