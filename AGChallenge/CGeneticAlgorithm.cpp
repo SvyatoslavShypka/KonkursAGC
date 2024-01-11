@@ -38,14 +38,14 @@ using namespace std;
 		for (int i = 0; i < popSize; i++)
 		{
 			vector<int> genotyp;	// First population is random
-			cout << "Create genotype..." << endl;
+			//cout << "Create genotype..." << endl;
 			//for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
 			for (int j = 0; j < 4; j++)
 			{
 				//genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
 				genotyp.push_back(CIndividual::randRange(0, 3));
 				//cout << "evaluatorPointer->iGetNumberOfValues(j): " << evaluatorPointer->iGetNumberOfValues(j) << " ----//---- ";
-				cout << "genotype[" << j << "]: " << genotyp.at(j) << endl;
+				//cout << "genotype[" << j << "]: " << genotyp.at(j) << endl;
 			}
 			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
