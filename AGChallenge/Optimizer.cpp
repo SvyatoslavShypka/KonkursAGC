@@ -50,6 +50,7 @@ void COptimizer::vRunIteration()
 
 	vector<int> v_candidate;
 	v_fill_randomly(v_candidate);
+	//v_candidate = c_genetic_algorithm.runOneIteration().getGenotyp();
 
 	double d_candidate_fitness = c_evaluator.dEvaluate(&v_candidate);
 

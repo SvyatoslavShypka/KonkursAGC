@@ -1,6 +1,7 @@
 ﻿#pragma once
-#include <iostream>
+//#include <iostream>
 #include <vector>
+#include "Evaluator.h"
 
 using namespace std;
 
@@ -18,22 +19,22 @@ private:
 
 public:
 	//CIndividual(int n);
-	CIndividual::CIndividual(int n);
-	CIndividual::CIndividual();
+	CIndividual(vector<int> genotyp, CLFLnetEvaluator* evaluatorPointer);
+	//CIndividual(int n);
+	//CIndividual();
 	double fitnessIndividual(vector<int> genotyp);
 	void genotypeGenerator(int n);
 	void printGenotyp();
 	string toString() const;
-	static pair<CIndividual, CIndividual> crossover(const CIndividual& parent1, const CIndividual& parent2);
+	//static pair<CIndividual, CIndividual> crossover(const CIndividual& parent1, const CIndividual& parent2);
 	void mutate(double mutProb);
 
-	CIndividual(vector<int> genotype, CLFLnetEvaluator* evaluatorPointer);
 	double getFitness();
 	//void mutate(float mutProb);
 	vector<CIndividual> cross(CIndividual& other);
 	inline vector<int> getGenotyp() { return genotyp; }
 
-	int randRange(int from, int to);
+	static int randRange(int from, int to);
 
 };
 

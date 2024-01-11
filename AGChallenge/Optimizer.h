@@ -16,7 +16,6 @@ public:
 	void vInitialize();
 	void vRunIteration();
 
-
 	vector<int> *pvGetCurrentBest() { return &v_current_best; }
 
 private:
