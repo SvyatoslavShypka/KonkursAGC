@@ -27,7 +27,6 @@ using namespace std;
 	};
 
 	CGeneticAlgorithm::CGeneticAlgorithm(int popSize, double crossProb, double mutProb, int requestQuantity, int pathsQuantity, int stopCriterion, CLFLnetEvaluator* evaluatorPointer) {
-
 		this->popSize = popSize;
 		this->crossProb = crossProb;
 		this->mutProb = mutProb;
@@ -39,19 +38,13 @@ using namespace std;
 		for (int i = 0; i < popSize; i++)
 		{
 			vector<int> genotyp;	// First population is random
-			//cout << "Create genotype..." << endl;
-			//for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
 			for (int j = 0; j < 4; j++)
 			{
-				//genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
 				genotyp.push_back(CIndividual::randRange(0, 3));
-				//cout << "evaluatorPointer->iGetNumberOfValues(j): " << evaluatorPointer->iGetNumberOfValues(j) << " ----//---- ";
-				//cout << "genotype[" << j << "]: " << genotyp.at(j) << endl;
 			}
 			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
 	}
-
 
 	// TODO deallocating memory
 	CGeneticAlgorithm::~CGeneticAlgorithm() {};
@@ -87,16 +80,11 @@ using namespace std;
 			iterator++;
 		}
 	}
-	//TODO how to check and return bestResult
-	//CIndividual* CGeneticAlgorithm::bestResult() const {
-	//	return bestRes;
-	//}
-
 
 	CIndividual CGeneticAlgorithm::runOneIteration()
 	{
 		vector<CIndividual> parents, newPopulation;
-		printPopulation();
+		printPopulation(vectorPopulation);
 		while (newPopulation.size() < vectorPopulation.size()) // while new population is not full, keep adding individuals
 		{
 			// Selection of Individuals to cross:
@@ -104,59 +92,68 @@ using namespace std;
 			{
 				int parentIndex = CIndividual::randRange(0, vectorPopulation.size() - 1);
 				CIndividual candidate1 = vectorPopulation.at(parentIndex);
+				CIndividual *candidat1Pointer = &vectorPopulation.at(parentIndex);
+
 				cout << "candidate1: " << candidate1.toString() << endl;
-				CIndividual candidate2 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));;
-				cout << &candidate1 << " && " << &candidate2 << endl;
-				while (&candidate1 == &candidate2) {
+				parentIndex = CIndividual::randRange(0, vectorPopulation.size() - 1);
+				CIndividual candidate2 = vectorPopulation.at(parentIndex);
+				cout << "candidate2??: " << candidate2.toString() << endl;
+				CIndividual *candidat2Pointer = &vectorPopulation.at(parentIndex);
+				cout << "Pointers eaqual? :" << (candidat1Pointer == candidat2Pointer) << endl;
+				while (candidat1Pointer == candidat2Pointer) {
 					cout << "while is here" << endl;
-					candidate2 = vectorPopulation.at(CIndividual::randRange(0, vectorPopulation.size() - 1));
+					parentIndex = CIndividual::randRange(0, vectorPopulation.size() - 1);
+					candidate2 = vectorPopulation.at(parentIndex);
+					candidat2Pointer = &vectorPopulation.at(parentIndex);
 				}
 
 				cout << "candidate2: " << candidate2.toString() << endl;
-				CIndividual parent = candidate1.getFitness() > candidate2.getFitness() ? candidate1 : candidate2; // if candidate1 is better than candidate2, parent1 = candidate1, else parent1 = candidate2
+
+				CIndividual parent = candidate1.getFitness() > candidate2.getFitness() ? candidate1 : candidate2; // better candidate
+				CIndividual *parentPointer = &parent;
 				if (i > 0) {
 					for (CIndividual parentInVector : parents) {
-						if (&parentInVector == &candidate1) {
+						if (&parentInVector == candidat1Pointer) {
 							parent = candidate2;
 						}
-						else if (&parentInVector == &candidate2) {
+						else if (&parentInVector == candidat2Pointer) {
 							parent = candidate1;
 						}
 					}
 				}
-				//cout << "candidate1.getFitness(): " << candidate1.getFitness() << endl;
 				cout << "parent: " << parent.toString() << endl;
 				parents.push_back(parent);
 			}
 
-			// Crossing:
+			// Parents crossing
 			for (int i = 0; i <= 2; i = i + 2) {
 				double randCross = dRand();
 				cout << "randCross: " << randCross << endl;
-				if (randCross < crossProb) // if crossover happens
+				if (randCross < crossProb) // cross probability
 				{
-					vector<CIndividual> children = parents.at(i).cross(parents.at(i + 1)); // cross parents and add children to the new population
-					newPopulation.push_back(children.at(0));
+					vector<CIndividual> children = parents.at(i).cross(parents.at(i + 1)); // cross parents 
+					newPopulation.push_back(children.at(0)); //add childrens
 					newPopulation.push_back(children.at(1));
 				}
-				else // if crossover doesn't happen
+				else // no need of crossing
 				{
 					newPopulation.push_back(CIndividual(parents.at(i).getGenotyp(), evaluatorPointer)); // simply add parents to the new population
 					newPopulation.push_back(CIndividual(parents.at(i + 1).getGenotyp(), evaluatorPointer));
 				}
 			}
-		} // end of while (newPopulation.size() < population.size())
+		}
 
-		// Mutation:
-		//for (int i = 0; i < newPopulation.size(); i++) // mutate each individual in the new population
-		//{
-		//	newPopulation.at(i).mutate(mutProb); // mutation probability is checked for each gene inside the mutate function
-		//}
-		//cout << vectorPopulation.at(0).toString() << endl;
-		//printPopulation();
+		//Mutation
+		cout << "Population before mutation" << endl;
+		printPopulation(newPopulation);
+		for (int i = 0; i < newPopulation.size(); i++) // mutate each individual in the new population
+		{
+			newPopulation.at(i).mutate(mutProb, pathsQuantity); // mutation probability is checked for each gene inside the mutate function
+		}
 		vectorPopulation = newPopulation; // replace old population with the new one
-		printPopulation();
-		// Find the best individual to return:
+		cout << "Population after mutation" << endl;
+		printPopulation(newPopulation);
+		// Look for the best individual
 		CIndividual bestIndividual = vectorPopulation.at(0);
 		for (int i = 1; i < vectorPopulation.size(); i++)
 		{
@@ -165,13 +162,10 @@ using namespace std;
 		return bestIndividual;
 	}
 
-	void CGeneticAlgorithm::printPopulation() {
-		cout << "Vector population: " << vectorPopulation.size() << ": ";
-
-		for (CIndividual ind : vectorPopulation) {
-			cout << ind.toString();
+	void CGeneticAlgorithm::printPopulation(vector<CIndividual> vectorCIndividual) {
+		cout << "Vector population: " << vectorCIndividual.size() << ": ";
+		for (int i = 0; i < vectorCIndividual.size(); i++) {
+			cout << vectorCIndividual.at(i).toString();
 		}
 		cout << endl;
 	}
-
-
