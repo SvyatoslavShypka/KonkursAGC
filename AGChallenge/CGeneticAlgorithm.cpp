@@ -99,7 +99,6 @@ using namespace std;
 		printPopulation();
 		while (newPopulation.size() < vectorPopulation.size()) // while new population is not full, keep adding individuals
 		{
-			//TODO
 			// Selection of Individuals to cross:
 			for (int i = 0; i <= 3; i++) // exectue twice, choose two parents
 			{
