@@ -18,6 +18,7 @@ public:
 
 	double getFitness();
 	vector<CIndividual> cross(CIndividual& other);
+	CIndividual vCross(CIndividual& second, CIndividual& third);
 	inline vector<int> getGenotyp() { return genotyp; }
 	static int randRange(int from, int to);
 };
