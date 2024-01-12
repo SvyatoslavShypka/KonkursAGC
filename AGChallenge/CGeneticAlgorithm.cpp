@@ -90,10 +90,15 @@ using namespace std;
 				parents.push_back(parent);
 			}
 			//test
-
-
+			vector<int> first = { 1,0,2,3,1,4 };
+			vector<int> second = { 1,2,3,4,0,1 };
+			vector<int> third = { 0,2,0,4,1,1 };
+						parents.at(0) = CIndividual(first, evaluatorPointer);
+			parents.at(1) = CIndividual(second, evaluatorPointer);
+			parents.at(2) = CIndividual(third, evaluatorPointer);
 			CIndividual childResult = parents.at(0).vCross(parents.at(1), parents.at(2));
-
+			cout << "Test result: " << childResult.toString() << endl;
+			//test-end
 
 			// Parents crossing
 			for (int i = 0; i <= 2; i = i + 2) {
