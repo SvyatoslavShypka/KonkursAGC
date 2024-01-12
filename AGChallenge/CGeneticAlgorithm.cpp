@@ -20,8 +20,7 @@ using namespace std;
 			vector<int> genotyp;	// First population is random
 			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
 			{
-				genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
-				cout << evaluatorPointer->iGetNumberOfValues(j) << endl;
+				genotyp.push_back(CIndividual::randRange(0, pathsQuantity));
 			}
 			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
@@ -48,17 +47,16 @@ using namespace std;
 		}
 	}
 
-	// TODO deallocating memory
 	CGeneticAlgorithm::~CGeneticAlgorithm() {};
 
 	CIndividual CGeneticAlgorithm::runOneIteration()
 	{
 		vector<CIndividual> parents, newPopulation;
 		//printPopulation(vectorPopulation);
-		while (newPopulation.size() < vectorPopulation.size()) // while new population is not full, keep adding individuals
+		while (newPopulation.size() < vectorPopulation.size())
 		{
 			// Selection of Individuals to cross:
-			for (int i = 0; i <= 3; i++) // exectue twice, choose two parents
+			for (int i = 0; i <= 3; i++) // execute 4 times, choose four parents
 			{
 				int parentIndex = CIndividual::randRange(0, vectorPopulation.size() - 1);
 				CIndividual candidate1 = vectorPopulation.at(parentIndex);
@@ -104,7 +102,7 @@ using namespace std;
 				}
 				else // no need of crossing
 				{
-					newPopulation.push_back(CIndividual(parents.at(i).getGenotyp(), evaluatorPointer)); // simply add parents to the new population
+					newPopulation.push_back(CIndividual(parents.at(i).getGenotyp(), evaluatorPointer)); // children like parents
 					newPopulation.push_back(CIndividual(parents.at(i + 1).getGenotyp(), evaluatorPointer));
 				}
 			}
@@ -113,11 +111,11 @@ using namespace std;
 		//Mutation
 		//cout << "Population before mutation" << endl;
 		//printPopulation(newPopulation);
-		for (int i = 0; i < newPopulation.size(); i++) // mutate each individual in the new population
+		for (int i = 0; i < newPopulation.size(); i++) 
 		{
 			newPopulation.at(i).mutate(mutProb, pathsQuantity); // mutation probability is checked for each gene inside the mutate function
 		}
-		vectorPopulation = newPopulation; // replace old population with the new one
+		vectorPopulation = newPopulation; // replace old population by new one
 		//cout << "Population after mutation" << endl;
 		//printPopulation(newPopulation);
 		// Look for the best individual
