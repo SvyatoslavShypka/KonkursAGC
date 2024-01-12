@@ -19,9 +19,7 @@ public:
 	CGeneticAlgorithm();
 	CGeneticAlgorithm(int popSize, double crossProb, double mutProb, int requestQuantity, int pathsQuantity, int stopCriterion, CLFLnetEvaluator* evaluatorPointer);
 	~CGeneticAlgorithm();
-	void vInitialize();
 	void printPopulation(vector<CIndividual> vectorCIndividual);
-	void runGeneticAlgorithm(int max_iterations);
 	CIndividual runOneIteration();
 };
 

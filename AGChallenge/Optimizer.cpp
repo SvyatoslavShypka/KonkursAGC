@@ -1,5 +1,4 @@
 ﻿#include "Optimizer.h"
-//#include "CGeneticAlgorithm.h"
 
 #include <cfloat>
 #include <iostream>
@@ -23,9 +22,7 @@ void COptimizer::vInitialize()
 }//void COptimizer::vInitialize()
 
 void COptimizer::vRunIteration()
-
 {
-
 	vector<int> v_candidate;
 	//v_fill_randomly(v_candidate);
 	CIndividual getBestCIndividual = c_genetic_algorithm.runOneIteration();

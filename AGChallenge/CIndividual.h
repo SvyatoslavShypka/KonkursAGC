@@ -7,16 +7,12 @@ using namespace std;
 class CIndividual {
 
 private:
-	
 	vector<int> genotyp;
 	double fitness;
 	CLFLnetEvaluator* evaluatorPointer;
 
 public:
 	CIndividual(vector<int> genotyp, CLFLnetEvaluator* evaluatorPointer);
-	double fitnessIndividual(vector<int> genotyp);
-	void genotypeGenerator(int n);
-	void printGenotyp();
 	string toString() const;
 	void mutate(double mutProb, int pathsQuantity);
 
@@ -24,6 +20,5 @@ public:
 	vector<CIndividual> cross(CIndividual& other);
 	inline vector<int> getGenotyp() { return genotyp; }
 	static int randRange(int from, int to);
-
 };
 

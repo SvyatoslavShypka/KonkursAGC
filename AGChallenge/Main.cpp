@@ -1,44 +1,34 @@
 #include "Evaluator.h"
 #include "Optimizer.h"
 #include "Timer.h"
-
 #include <exception>
 #include <iostream>
 #include <random>
 #include "CIndividual.h"
 #include "CGeneticAlgorithm.h"
 
-
 using namespace TimeCounters;
-
 using namespace std;
 
-#define dMAX_TIME 1 * 1
-
+#define dMAX_TIME 1 * 30
 
 void vRunExperiment(CLFLnetEvaluator &cConfiguredEvaluator)
 {
 	try
 	{
 		CTimeCounter c_time_counter;
-
 		double d_time_passed;
-
 		COptimizer c_optimizer(cConfiguredEvaluator);
-
 		c_time_counter.vSetStartNow();
-
 		c_optimizer.vInitialize();
-
 		c_time_counter.bGetTimePassed(&d_time_passed);
-
 		while (d_time_passed <= dMAX_TIME)
 		{
 			c_optimizer.vRunIteration();
 			c_optimizer.pvGetCurrentBest();
 
 			c_time_counter.bGetTimePassed(&d_time_passed);
-			cout << "Time: " << d_time_passed << endl;
+			//cout << "Time: " << d_time_passed << endl;
 		}//while (d_time_passed <= MAX_TIME)
 	}//try
 	catch (exception &c_exception)
@@ -47,46 +37,23 @@ void vRunExperiment(CLFLnetEvaluator &cConfiguredEvaluator)
 	}//catch (exception &c_exception)
 }//void vRunExperiment(const CEvaluator &cConfiguredEvaluator)
 
-
-
 void  vRunLFLExperiment(CString  sNetName)
 {
 	CLFLnetEvaluator c_lfl_eval;
 	c_lfl_eval.bConfigure(sNetName);
 	vRunExperiment(c_lfl_eval);
-	
 }//void vRunRastriginExperiment(int iNumberOfBits, int iBitsPerFloat, int iMaskSeed)
 
 
 void main(int iArgCount, char **ppcArgValues)
 {
-
-	/*
 	srand(time(NULL));
-	
-	CGeneticAlgorithm cGeneticAlgorithmObject(POPULATION_SIZE, CROSS_PROBABILITY, MUTATION_PROBABILITY, REQUEST_QUANTITY, PATHS_QUANTITY, STOP_CRITERION);
-	cGeneticAlgorithmObject.vInitialize();
-	cGeneticAlgorithmObject.printPopulation();
-	
-	*/
-
-	//CIndividual obj1;
-	
-/*
-	obj1.genotypeGenerator(4);
-	obj1.printGenotyp();
-	
-*/
-
 	
 	random_device c_mask_seed_generator;
 	int i_mask_seed = (int)c_mask_seed_generator();
 
-
 	CString  s_test = "104b00";
 	vRunLFLExperiment(s_test);
-
-	
 
 	/*vRunIsingSpinGlassExperiment(81, 0, i_mask_seed);
 	vRunIsingSpinGlassExperiment(81, 0, iSEED_NO_MASK);
