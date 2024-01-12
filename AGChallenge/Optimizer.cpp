@@ -9,6 +9,7 @@ using namespace std;
 COptimizer::COptimizer(CLFLnetEvaluator &cEvaluator)
 	: c_evaluator(cEvaluator), c_genetic_algorithm(POPULATION_SIZE, CROSS_PROBABILITY, MUTATION_PROBABILITY, REQUEST_QUANTITY, PATHS_QUANTITY, STOP_CRITERION, &c_evaluator)
 {
+	//cout << "Optimizer has been created" << endl;
 	random_device c_seed_generator;
 	c_rand_engine.seed(c_seed_generator());
 
@@ -27,8 +28,13 @@ void COptimizer::vRunIteration()
 	//v_fill_randomly(v_candidate);
 	CIndividual getBestCIndividual = c_genetic_algorithm.runOneIteration();
 	v_candidate = getBestCIndividual.getGenotyp();
-	//cout << "v_candidate.size(): " << v_candidate.size() << endl;
+	//cout << "%";
+	//for (int i = 0; i < v_candidate.size(); i++) {
+	//	cout << v_candidate.at(i);
+	//}
+	//cout << "%";
 	double d_candidate_fitness = c_evaluator.dEvaluate(&v_candidate);
+	//cout << "d_candidate_fitness: " << d_candidate_fitness << endl;
 
 	if (d_candidate_fitness > d_current_best_fitness)
 	{
@@ -36,7 +42,8 @@ void COptimizer::vRunIteration()
 		v_current_best = v_candidate;
 		d_current_best_fitness = d_candidate_fitness;
 
-		cout << "---------------------------------------result----------------" << d_current_best_fitness << endl;
+		//cout << "---------------------------------------result----------------" << d_current_best_fitness << endl;
+		cout << d_current_best_fitness << endl;
 	}//if (d_candidate_fitness > d_current_best_fitness)
 }//void COptimizer::vRunIteration()
 

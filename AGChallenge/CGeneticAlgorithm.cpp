@@ -21,6 +21,7 @@ using namespace std;
 			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
 			{
 				genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
+				cout << evaluatorPointer->iGetNumberOfValues(j) << endl;
 			}
 			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
@@ -38,9 +39,10 @@ using namespace std;
 		for (int i = 0; i < popSize; i++)
 		{
 			vector<int> genotyp;	// First population is random
-			for (int j = 0; j < 4; j++)
+			for (int j = 0; j < evaluatorPointer->iGetNumberOfBits(); j++)
 			{
-				genotyp.push_back(CIndividual::randRange(0, 3));
+				genotyp.push_back(CIndividual::randRange(0, pathsQuantity));
+				//genotyp.push_back(lRand(evaluatorPointer->iGetNumberOfValues(j)));
 			}
 			vectorPopulation.push_back(CIndividual(genotyp, evaluatorPointer));
 		}
@@ -106,7 +108,7 @@ using namespace std;
 					newPopulation.push_back(CIndividual(parents.at(i + 1).getGenotyp(), evaluatorPointer));
 				}
 			}
-		}
+		} //while
 
 		//Mutation
 		//cout << "Population before mutation" << endl;
@@ -124,6 +126,7 @@ using namespace std;
 		{
 			if (vectorPopulation.at(i).getFitness() > bestIndividual.getFitness()) { bestIndividual = vectorPopulation.at(i); }
 		}
+		//cout << "Best individual" << bestIndividual.toString() << endl;
 		return bestIndividual;
 	}
 

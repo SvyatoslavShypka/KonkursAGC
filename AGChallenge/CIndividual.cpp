@@ -19,6 +19,8 @@ string CIndividual::toString() const {
 
 double CIndividual::getFitness()
 {
+	//vector<int> genotype = { 1,0,2,3,8,9,7,5,4,3,2,3,4,5,6,7,8,150 };
+	//if (fitness == NULL) { fitness = evaluatorPointer->dEvaluate(&genotype); }
 	if (fitness == NULL) { fitness = evaluatorPointer->dEvaluate(&genotyp); }
 	return fitness;
 }
@@ -32,8 +34,9 @@ void CIndividual::mutate(double mutProb, int pathsQuantity)
 		if (isMutated < mutProb)
 		{
 			genotyp.at(i) = randRange(0, pathsQuantity - 1);
+			//genotyp.at(i) = lRand(evaluatorPointer->iGetNumberOfValues(i));
 			//cout << "Mutation index: " << i << endl;
-			if (fitness != NULL) { fitness = NULL; } // If mutation happens, fitness needs to be recalculated
+			if (fitness != NULL) { fitness = NULL; } // new genotype - new fitness
 			//cout << this->toString() << endl;
 		}
 	}
