@@ -89,6 +89,11 @@ using namespace std;
 				//cout << "parent: " << parent.toString() << endl;
 				parents.push_back(parent);
 			}
+			//test
+
+
+			CIndividual childResult = parents.at(0).vCross(parents.at(1), parents.at(2));
+
 
 			// Parents crossing
 			for (int i = 0; i <= 2; i = i + 2) {

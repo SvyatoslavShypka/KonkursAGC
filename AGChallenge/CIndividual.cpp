@@ -67,61 +67,7 @@ vector<CIndividual> CIndividual::cross(CIndividual& other)
 	return children;
 }
 
-vector<CIndividual> CIndividual::cross(CIndividual& other)
-{
-	// cross and create children
-	int crossPunkt = randRange(1, genotyp.size() - 1);
-	//cout << "crossPunkt: " << crossPunkt << endl;
-	//cout << "paren1: " << this->toString() << endl;
-	//cout << "paren2: " << other.toString() << endl;
 
-	vector<int> genotype1, genotype2;
-	for (int i = 0; i < genotyp.size(); i++)
-	{
-		if (i < crossPunkt)
-		{
-			genotype1.push_back(genotyp.at(i));
-			genotype2.push_back(other.genotyp.at(i));
-		}
-		else
-		{
-			genotype1.push_back(other.genotyp.at(i));
-			genotype2.push_back(genotyp.at(i));
-		}
-	}
-	vector<CIndividual> children = vector<CIndividual>{ CIndividual(genotype1, evaluatorPointer), CIndividual(genotype2, evaluatorPointer) };
-	//cout << "child1: " << children.at(0).toString() << endl;
-	//cout << "child2: " << children.at(1).toString() << endl;
-	return children;
-}
-
-vector<CIndividual> CIndividual::cross(CIndividual& other)
-{
-	// cross and create children
-	int crossPunkt = randRange(1, genotyp.size() - 1);
-	//cout << "crossPunkt: " << crossPunkt << endl;
-	//cout << "paren1: " << this->toString() << endl;
-	//cout << "paren2: " << other.toString() << endl;
-
-	vector<int> genotype1, genotype2;
-	for (int i = 0; i < genotyp.size(); i++)
-	{
-		if (i < crossPunkt)
-		{
-			genotype1.push_back(genotyp.at(i));
-			genotype2.push_back(other.genotyp.at(i));
-		}
-		else
-		{
-			genotype1.push_back(other.genotyp.at(i));
-			genotype2.push_back(genotyp.at(i));
-		}
-	}
-	vector<CIndividual> children = vector<CIndividual>{ CIndividual(genotype1, evaluatorPointer), CIndividual(genotype2, evaluatorPointer) };
-	//cout << "child1: " << children.at(0).toString() << endl;
-	//cout << "child2: " << children.at(1).toString() << endl;
-	return children;
-}
 
 CIndividual CIndividual::vCross(CIndividual& second, CIndividual& third)
 {
@@ -138,7 +84,6 @@ CIndividual CIndividual::vCross(CIndividual& second, CIndividual& third)
 	}
 	return CIndividual(resultGenotype, evaluatorPointer);
 }
-
 
 int CIndividual::randRange(int from, int to)
 {
